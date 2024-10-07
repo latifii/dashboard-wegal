@@ -16,6 +16,11 @@ export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
+export const RolesPage = lazy(() => import('src/pages/roles'));
+export const LogsPage = lazy(() => import('src/pages/logs'));
+export const InInventoryPage = lazy(() => import('src/pages/in-Inventory'));
+export const OutInventoryPage = lazy(() => import('src/pages/out-Inventory'));
+export const InvoicePage = lazy(() => import('src/pages/invoice'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 // ----------------------------------------------------------------------
@@ -48,6 +53,11 @@ export function Router() {
         { path: 'users', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'roles', element: <RolesPage /> },
+        { path: 'logs', element: <LogsPage /> },
+        { path: 'in-inventory', element: <InInventoryPage /> },
+        { path: 'out-inventory', element: <OutInventoryPage /> },
+        { path: 'invoice', element: <InvoicePage /> },
       ],
     },
     {

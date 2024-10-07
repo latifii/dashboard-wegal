@@ -29,7 +29,7 @@ import type { UserProps } from '../user-table-row';
 
 // ----------------------------------------------------------------------
 
-export function RolesView() {
+export function LogsView() {
   const table = useTable();
 
   const [filterName, setFilterName] = useState('');

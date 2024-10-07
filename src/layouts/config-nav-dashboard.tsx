@@ -22,11 +22,28 @@ export const navData = [
     title: 'لیست نقش ها',
     path: '/roles',
     icon: icon('ic-cart'),
-    info: (
-      <Label color="error" variant="inverted">
-        +3
-      </Label>
-    ),
+  },
+  {
+    title: 'فعالیت ها',
+    path: '/logs',
+    icon: icon('ic-cart'),
+  },
+
+  {
+    title: 'ورود انبار',
+    path: '/in-inventory',
+    icon: icon('ic-cart'),
+  },
+  {
+    title: 'خروج انبار',
+    path: '/out-inventory',
+    icon: icon('ic-cart'),
+  },
+
+  {
+    title: 'فاکتور',
+    path: '/invoice',
+    icon: icon('ic-cart'),
   },
   {
     title: 'Blog',

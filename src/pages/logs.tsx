@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 import { CONFIG } from 'src/config-global';
 
-import { RolesView } from 'src/sections/roles/view';
+import { LogsView } from 'src/sections/logs/view';
 
 // ----------------------------------------------------------------------
 
@@ -10,10 +10,10 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {`Roles - ${CONFIG.appName}`}</title>
+        <title> {`Logs - ${CONFIG.appName}`}</title>
       </Helmet>
 
-      <RolesView />
+      <LogsView />
     </>
   );
 }
