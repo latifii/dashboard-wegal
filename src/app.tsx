@@ -20,8 +20,8 @@ export default function App() {
   const githubButton = (
     <Fab
       size="medium"
-      aria-label="Github"
-      href="https://github.com/minimal-ui-kit/material-kit-react"
+      aria-label="ٌWegal"
+      href="https://mattresswegal.com"
       sx={{
         zIndex: 9,
         right: 20,
