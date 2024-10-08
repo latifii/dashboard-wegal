@@ -2,9 +2,12 @@ import type { Theme } from '@mui/material/styles';
 
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
-import { shadows, typography, components, colorSchemes, customShadows } from './core';
+import { shadows, components, colorSchemes, customShadows } from './core';
 
 // ----------------------------------------------------------------------
+const typography = {
+  fontFamily: 'vazir, Arial, sans-serif',
+};
 
 export function createTheme(): Theme {
   const initialTheme = {

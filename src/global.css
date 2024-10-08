@@ -1,15 +1,4 @@
 /** **************************************
-* Fonts: app
-*************************************** */
-@import '@fontsource-variable/dm-sans';
-
-@import '@fontsource/barlow/400.css';
-@import '@fontsource/barlow/500.css';
-@import '@fontsource/barlow/600.css';
-@import '@fontsource/barlow/700.css';
-@import '@fontsource/barlow/800.css';
-
-/** **************************************
 * Plugins
 *************************************** */
 /* scrollbar */
@@ -17,6 +6,48 @@
 
 /* chart */
 @import './components/chart/styles.css';
+
+/** **************************************
+* Fonts: app
+*************************************** */
+@font-face {
+  font-family: 'vazir';
+  font-style: normal;
+  font-weight: 100;
+  src: url('/assets/fonts/vazir/Vazir-Thin.woff2');
+}
+
+@font-face {
+  font-family: 'vazir';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/assets/fonts/vazir/Vazir-Light.woff2');
+}
+@font-face {
+  font-family: 'vazir';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/vazir/Vazir.woff2');
+}
+@font-face {
+  font-family: 'vazir';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/assets/fonts/vazir/Vazir-Medium.woff2');
+}
+@font-face {
+  font-family: 'vazir';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/assets/fonts/vazir/Vazir-Bold.woff2');
+}
+
+@font-face {
+  font-family: 'vazir';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/assets/fonts/vazir/Vazir-Black.woff2');
+}
 
 /** **************************************
 * Baseline
@@ -32,6 +63,7 @@ body,
   flex: 1 1 auto;
   min-height: 100%;
   flex-direction: column;
+  font-family: 'vazir' !important;
 }
 img {
   max-width: 100%;

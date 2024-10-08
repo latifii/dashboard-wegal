@@ -1,4 +1,3 @@
-import { Label } from 'src/components/label';
 import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -39,25 +38,25 @@ export const navData = [
     path: '/out-inventory',
     icon: icon('ic-cart'),
   },
-
   {
     title: 'فاکتور',
     path: '/invoice',
     icon: icon('ic-cart'),
   },
   {
+    title: 'ثبت گارانتی',
+    path: '/warranty-register',
+    icon: icon('ic-cart'),
+  },
+
+  {
+    title: 'بررسی گارانتی',
+    path: '/warranty-display',
+    icon: icon('ic-cart'),
+  },
+  {
     title: 'Blog',
     path: '/blog',
     icon: icon('ic-blog'),
-  },
-  {
-    title: 'Sign in',
-    path: '/sign-in',
-    icon: icon('ic-lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic-disabled'),
   },
 ];
