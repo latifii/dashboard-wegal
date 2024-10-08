@@ -1,5 +1,19 @@
-const Verify: React.FC = () => {
-  return <div>Verify</div>;
-};
+import { Helmet } from 'react-helmet-async';
 
-export default Verify;
+import { CONFIG } from 'src/config-global';
+
+import { UserView } from 'src/sections/user/view';
+
+// ----------------------------------------------------------------------
+
+export default function Page() {
+  return (
+    <>
+      <Helmet>
+        <title> {`تایید کد-${CONFIG.appName}`}</title>
+      </Helmet>
+
+      <UserView />
+    </>
+  );
+}

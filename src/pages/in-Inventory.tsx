@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {`Logs - ${CONFIG.appName}`}</title>
+        <title> {`ورود انبار-${CONFIG.appName}`}</title>
       </Helmet>
 
       <InInventoryView />

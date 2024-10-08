@@ -1,5 +1,6 @@
 import 'src/global.css';
 
+import { Provider } from 'react-redux';
 import { CacheProvider } from '@emotion/react';
 
 import Fab from '@mui/material/Fab';
@@ -12,6 +13,7 @@ import { ThemeProvider } from 'src/theme/theme-provider';
 
 import { Iconify } from 'src/components/iconify';
 
+import store from './store/store';
 import { cacheRtl } from './theme/create-cache';
 
 // ----------------------------------------------------------------------
@@ -41,10 +43,12 @@ export default function App() {
 
   return (
     <CacheProvider value={cacheRtl}>
-      <ThemeProvider>
-        <Router />
-        {githubButton}
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <Router />
+          {githubButton}
+        </ThemeProvider>
+      </Provider>
     </CacheProvider>
   );
 }

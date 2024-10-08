@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {`Roles - ${CONFIG.appName}`}</title>
+        <title> {`نقش ها-${CONFIG.appName}`}</title>
       </Helmet>
 
       <RolesView />

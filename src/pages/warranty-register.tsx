@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <>
       <Helmet>
-        <title> {`گارانتی - ${CONFIG.appName}`}</title>
+        <title> {`گارانتی-${CONFIG.appName}`}</title>
       </Helmet>
 
       <WarrantyRegisterView />

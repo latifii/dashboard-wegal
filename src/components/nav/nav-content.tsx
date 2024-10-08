@@ -40,7 +40,6 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
                       color: 'var(--layout-nav-item-color)',
                       minHeight: 'var(--layout-nav-item-height)',
                       ...(isActived && {
-                        fontWeight: 'fontWeightSemiBold',
                         bgcolor: 'var(--layout-nav-item-active-bg)',
                         color: 'var(--layout-nav-item-active-color)',
                         '&:hover': {

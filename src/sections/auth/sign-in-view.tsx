@@ -1,110 +1,90 @@
-import { useState, useCallback } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Divider from '@mui/material/Divider';
+import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import LoadingButton from '@mui/lab/LoadingButton';
-import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { Iconify } from 'src/components/iconify';
+import { setErrors } from 'src/store/slices/errorSlice';
+
+import type { SiginInForm } from './sign-in.types';
 
 // ----------------------------------------------------------------------
 
 export function SignInView() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    clearErrors,
+    setError,
+    formState: { errors },
+  } = useForm<SiginInForm>();
 
-  const handleSignIn = useCallback(() => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const value = target.value.replace(/[^0-9]/g, '');
+    setValue('mobile', value);
+    clearErrors('mobile');
+    if (value.length === 0) {
+      setError('mobile', { type: 'manual', message: 'شماره الزامی است' });
+    } else if (value.length < 11) {
+      setError('mobile', { type: 'manual', message: 'حداقل 11 شماره باید وارد شود' });
+    }
+  };
+
+  const handleSignIn: SubmitHandler<SiginInForm> = (data) => {
+    console.log(data);
+    dispatch(setErrors('test error!!'));
     router.push('/');
-  }, [router]);
-
-  const renderForm = (
-    <Box display="flex" flexDirection="column" alignItems="flex-end">
-      <TextField
-        fullWidth
-        name="email"
-        label="Email address"
-        defaultValue="hello@gmail.com"
-        InputLabelProps={{ shrink: true }}
-        sx={{ mb: 3 }}
-      />
-
-      <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
-        Forgot password?
-      </Link>
-
-      <TextField
-        fullWidth
-        name="password"
-        label="Password"
-        defaultValue="@demo1234"
-        InputLabelProps={{ shrink: true }}
-        type={showPassword ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        sx={{ mb: 3 }}
-      />
-
-      <LoadingButton
-        fullWidth
-        size="large"
-        type="submit"
-        color="inherit"
-        variant="contained"
-        onClick={handleSignIn}
-      >
-        Sign in
-      </LoadingButton>
-    </Box>
-  );
+  };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(handleSignIn)}>
       <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
-        <Typography variant="h5">Sign in</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-            Get started
-          </Link>
+        <Typography variant="h5">ورود | ثبت نام</Typography>
+        <Typography variant="body2">
+          جهت ورود یا ثبت نام به داشبورد کاربری شماره موبایل وارد کنید{' '}
         </Typography>
       </Box>
 
-      {renderForm}
+      <Box display="flex" flexDirection="column" alignItems="flex-end">
+        <TextField
+          fullWidth
+          name="mobile"
+          label="شماره موبایل"
+          InputLabelProps={{ shrink: true }}
+          sx={{ mb: 3 }}
+          error={!!errors.mobile}
+          helperText={errors.mobile ? errors.mobile.message : ''}
+          inputProps={{
+            pattern: '[0-9]*',
+            inputMode: 'numeric',
+            maxLength: 11,
+          }}
+          inputRef={
+            register('mobile', {
+              required: 'شماره موبایل الزامی است',
+              minLength: { value: 11, message: 'شماره موبایل نمی‌تواند کمتر از 11 رقم باشد' },
+              pattern: { value: /^[0-9]+$/, message: 'فقط اعداد مجاز هستند' },
+            }).ref
+          }
+          onInput={handleInputChange}
+        />
 
-      <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
-        <Typography
-          variant="overline"
-          sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium' }}
-        >
-          OR
-        </Typography>
-      </Divider>
-
-      <Box gap={1} display="flex" justifyContent="center">
-        <IconButton color="inherit">
-          <Iconify icon="logos:google-icon" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify icon="eva:github-fill" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify icon="ri:twitter-x-fill" />
-        </IconButton>
+        <Button fullWidth size="large" type="submit" color="inherit" variant="contained">
+          تایید و دریافت کد
+        </Button>
       </Box>
-    </>
+    </form>
   );
 }
