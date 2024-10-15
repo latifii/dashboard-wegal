@@ -11,10 +11,9 @@ import Typography from '@mui/material/Typography';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { setErrors } from 'src/store/slices/errorSlice';
+import { setNotification } from 'src/store/slices/notificationSlice';
 
 import type { SiginInForm } from './sign-in.types';
-
 // ----------------------------------------------------------------------
 
 export function SignInView() {
@@ -44,8 +43,9 @@ export function SignInView() {
 
   const handleSignIn: SubmitHandler<SiginInForm> = (data) => {
     console.log(data);
-    dispatch(setErrors('test error!!'));
-    router.push('/');
+    dispatch(setNotification({ message: 'عملیات با موفقیت انجام شد', status: 'success' }));
+    dispatch(setNotification({ message: 'عملیات با ارور انجام شد', status: 'error' }));
+    // router.push('/');
   };
 
   return (

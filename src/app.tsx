@@ -15,6 +15,7 @@ import { Iconify } from 'src/components/iconify';
 
 import store from './store/store';
 import { cacheRtl } from './theme/create-cache';
+import Notifications from './components/error-notification/notifications';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +46,7 @@ export default function App() {
     <CacheProvider value={cacheRtl}>
       <Provider store={store}>
         <ThemeProvider>
+          <Notifications />
           <Router />
           {githubButton}
         </ThemeProvider>

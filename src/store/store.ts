@@ -3,11 +3,13 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import userReducer from './slices/userSlice';
 import errorReducer from './slices/errorSlice';
+import notificationReducer from './slices/notificationSlice';
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     error: errorReducer,
+    notification: notificationReducer,
   },
 });
 
