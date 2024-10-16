@@ -2,6 +2,8 @@ import 'src/global.css';
 
 import { Provider } from 'react-redux';
 import { CacheProvider } from '@emotion/react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Fab from '@mui/material/Fab';
 
@@ -15,6 +17,7 @@ import { Iconify } from 'src/components/iconify';
 
 import store from './store/store';
 import { cacheRtl } from './theme/create-cache';
+import { queryClient } from './configs/react-query';
 import Notifications from './components/error-notification/notifications';
 
 // ----------------------------------------------------------------------
@@ -45,11 +48,14 @@ export default function App() {
   return (
     <CacheProvider value={cacheRtl}>
       <Provider store={store}>
-        <ThemeProvider>
-          <Notifications />
-          <Router />
-          {githubButton}
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <ThemeProvider>
+            <Notifications />
+            <Router />
+            {githubButton}
+          </ThemeProvider>
+        </QueryClientProvider>
       </Provider>
     </CacheProvider>
   );
