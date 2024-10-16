@@ -1,3 +1,5 @@
+import type { AxiosInstance } from 'axios';
+
 import axios from 'axios';
 
 import store from 'src/store/store';
@@ -5,12 +7,20 @@ import { setErrors } from 'src/store/slices/errorSlice';
 
 import { API_BASE_URL } from './global';
 
-const axiosInstance = axios.create({
+type HttpClient = {
+  get: AxiosInstance['get'];
+  post: AxiosInstance['post'];
+  delete: AxiosInstance['delete'];
+  put: AxiosInstance['put'];
+  patch: AxiosInstance['patch'];
+};
+
+const app: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 });
 
-axiosInstance.interceptors.response.use(
+app.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -22,4 +32,11 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+const http: HttpClient = {
+  get: app.get,
+  post: app.post,
+  delete: app.post,
+  put: app.put,
+  patch: app.patch,
+};
+export default http;
