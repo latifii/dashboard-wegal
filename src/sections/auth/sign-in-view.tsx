@@ -2,23 +2,50 @@ import type { SubmitHandler } from 'react-hook-form';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { useRouter } from 'src/routes/hooks';
+// import { useRouter } from 'src/routes/hooks';
 
-import { setNotification } from 'src/store/slices/notificationSlice';
+// import { setNotification } from 'src/store/slices/notificationSlice';
+
+import { useVerify } from './useVerify';
 
 import type { SiginInForm } from './sign-in.types';
 // ----------------------------------------------------------------------
 
 export function SignInView() {
-  const router = useRouter();
-  const dispatch = useDispatch();
+  // const router = useRouter();
+  // const dispatch = useDispatch();
+  const { mutate: verifyMutate, isPending } = useVerify();
+  const sendPostRequest = async () => {
+    try {
+      const response = await fetch('https://warranty.wegal.ir/Account/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mobile: '09123456789', // داده‌های مورد نیاز درخواست شما
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json(); // اگر پاسخ JSON باشد
+      console.log('Response data:', data); // نمایش داده‌های پاسخ
+    } catch (error) {
+      console.error('Error in fetch request:', error);
+    }
+  };
+
+  // فراخوانی تابع برای ارسال درخواست
 
   const {
     register,
@@ -42,9 +69,9 @@ export function SignInView() {
   };
 
   const handleSignIn: SubmitHandler<SiginInForm> = (data) => {
-    console.log(data);
-    dispatch(setNotification({ message: 'عملیات با موفقیت انجام شد', status: 'success' }));
-    dispatch(setNotification({ message: 'عملیات با ارور انجام شد', status: 'error' }));
+    console.log(data.mobile);
+    sendPostRequest();
+    // verifyMutate({ mobileNumber: data.mobile });
     // router.push('/');
   };
 
@@ -81,7 +108,14 @@ export function SignInView() {
           onInput={handleInputChange}
         />
 
-        <Button fullWidth size="large" type="submit" color="inherit" variant="contained">
+        <Button
+          fullWidth
+          size="large"
+          type="submit"
+          color="inherit"
+          variant="contained"
+          // disabled={isPending}
+        >
           تایید و دریافت کد
         </Button>
       </Box>
