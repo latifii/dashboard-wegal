@@ -51,12 +51,15 @@ const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
       const {
-        target: { value, nextElementSibling },
+        target: { value },
       } = e;
 
+      const targetIndex = inputsRef.current.indexOf(e.target as HTMLInputElement);
+
       if (value.match(inputProps.pattern)) {
-        if (nextElementSibling !== null) {
-          (nextElementSibling as HTMLInputElement).focus();
+        if (targetIndex < inputsRef.current.length - 1) {
+          const nextInput = inputsRef.current[targetIndex + 1];
+          nextInput.focus();
         }
       } else {
         e.target.value = '';
@@ -70,19 +73,23 @@ const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
 
     const handleOnKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
       const { key } = e;
-      const target = e.target as HTMLInputElement;
+      const targetIndex = inputsRef.current.indexOf(e.target as HTMLInputElement);
+
       if (key === 'Backspace') {
-        if (target.value === '') {
-          if (target.previousElementSibling !== null) {
-            const previousElement = target.previousElementSibling as HTMLInputElement;
-            previousElement.value = '';
-            previousElement.focus();
-          } else {
-            target.value = '';
-          }
+        e.preventDefault();
+
+        const target = e.target as HTMLInputElement;
+
+        if (target.value === '' && targetIndex > 0) {
+          const previousInput = inputsRef.current[targetIndex - 1];
+          previousInput.value = '';
+          previousInput.focus();
+        } else {
+          target.value = '';
         }
+
+        sendResult();
       }
-      sendResult();
     };
 
     useImperativeHandle(ref, () => ({
