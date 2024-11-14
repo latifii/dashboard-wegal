@@ -27,7 +27,7 @@ export type AuthCodeRef = {
 const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
   ({ autoFocus = true, isDisabled, length = 5, onChange }, ref) => {
     if (length < 1) {
-      throw new Error('تعداد ارقام باید بزرگتر از صفر باشد');
+      throw new Error('.تعداد ارقام باید بزرگ‌‌تر از صفر باشد');
     }
 
     const inputsRef = useRef<Array<HTMLInputElement>>([]);
