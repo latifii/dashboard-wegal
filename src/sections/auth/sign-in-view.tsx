@@ -11,7 +11,10 @@ import Typography from '@mui/material/Typography';
 
 // import { useRouter } from 'src/routes/hooks';
 
+import { useDispatch } from 'react-redux';
+
 // import { setNotification } from 'src/store/slices/notificationSlice';
+import { setNotification } from 'src/store/slices/notificationSlice';
 
 import { useVerify } from './useVerify';
 
@@ -20,7 +23,7 @@ import type { SiginInForm } from './sign-in.types';
 
 export function SignInView() {
   // const router = useRouter();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { mutate: verifyMutate, isPending } = useVerify();
   const sendPostRequest = async () => {
     try {
@@ -41,7 +44,8 @@ export function SignInView() {
       const data = await response.json(); // اگر پاسخ JSON باشد
       console.log('Response data:', data); // نمایش داده‌های پاسخ
     } catch (error) {
-      console.error('Error in fetch request:', error);
+      console.error('Error in fetch request:', error.message);
+      dispatch(setNotification({ message: error.message, status: 'error' }));
     }
   };
 
