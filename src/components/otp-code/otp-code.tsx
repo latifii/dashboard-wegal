@@ -4,25 +4,7 @@ import { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 
 import { Box, TextField } from '@mui/material';
 
-// import type { ComponentBase } from '../types/component-base.type';
-
-export type AuthCodeProps = {
-  autoFocus?: boolean;
-  length?: number;
-  isDisabled?: boolean;
-  onChange: (value: string) => void;
-};
-
-export type AuthInputProps = {
-  min?: string;
-  max?: string;
-  pattern: string;
-};
-
-export type AuthCodeRef = {
-  focus: () => void;
-  clear: () => void;
-};
+import type { AuthCodeRef, AuthCodeProps, AuthInputProps } from './otp-code.types';
 
 const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
   ({ autoFocus = true, isDisabled, length = 5, onChange }, ref) => {
@@ -47,6 +29,22 @@ const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
     const sendResult = () => {
       const result = inputsRef.current.map((input) => input.value).join('');
       onChange(result);
+    };
+
+    const handleOnPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+      const pastedValue = e.clipboardData.getData('Text');
+      const targetIndex = inputsRef.current.indexOf(e.target as HTMLInputElement);
+
+      e.preventDefault();
+
+      let index = targetIndex;
+      for (let i = 0; i < pastedValue.length; i += 1) {
+        if (index < inputsRef.current.length) {
+          inputsRef.current[index].value = pastedValue[i];
+          index += 1;
+        }
+      }
+      sendResult();
     };
 
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -100,8 +98,7 @@ const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
       },
       clear: () => {
         if (inputsRef.current) {
-          // eslint-disable-next-line no-plusplus
-          for (let i = 0; i < inputsRef.current.length; i++) {
+          for (let i = 0; i < inputsRef.current.length; i += 1) {
             inputsRef.current[i].value = '';
           }
 
@@ -113,28 +110,33 @@ const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
     }));
 
     const inputs = [];
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i += 1) {
       inputs.push(
         <TextField
           key={`input-${i + 1}`}
-          inputProps={{ maxLength: 1 }}
+          inputProps={{
+            maxLength: 1,
+            style: {
+              textAlign: 'center',
+            },
+          }}
           disabled={isDisabled}
           onChange={handleOnChange}
           onFocus={handleOnFocus}
           onKeyDown={handleOnKeyDown}
+          onPaste={handleOnPaste}
           inputRef={(element: HTMLInputElement) => {
             inputsRef.current[i] = element;
           }}
           variant="outlined"
           size="small"
-          sx={{ width: '3rem', textAlign: 'center' }}
+          sx={{ width: '4rem' }}
         />
       );
     }
 
     return (
-      <Box display="flex" gap={2} justifyContent="center">
+      <Box display="flex" gap={2} justifyContent="center" flexDirection="row-reverse">
         {inputs}
       </Box>
     );

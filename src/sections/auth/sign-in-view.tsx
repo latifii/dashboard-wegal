@@ -81,7 +81,7 @@ export function SignInView() {
 
   return (
     <form onSubmit={handleSubmit(handleSignIn)}>
-      <Box gap={1.5} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
+      <Box gap={3} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
         <Typography variant="h5">ورود | ثبت نام</Typography>
         <Typography variant="body2">
           جهت ورود یا ثبت نام به داشبورد کاربری شماره موبایل وارد کنید{' '}
