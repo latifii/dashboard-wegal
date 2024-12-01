@@ -1,6 +1,4 @@
-import type { UserProps } from 'src/sections/user/user-table-row';
-
-// ----------------------------------------------------------------------
+import type { UserProps } from 'src/sections/user/user-table.types';
 
 export const visuallyHidden = {
   border: 0,

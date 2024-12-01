@@ -7,17 +7,9 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 
 import { visuallyHidden } from 'src/utils/utils';
 
-// ----------------------------------------------------------------------
+import type { UserTableHeadProps } from './user-table.types';
 
-type UserTableHeadProps = {
-  orderBy: string;
-  rowCount: number;
-  numSelected: number;
-  order: 'asc' | 'desc';
-  onSort: (id: string) => void;
-  headLabel: Record<string, any>[];
-  onSelectAllRows: (checked: boolean) => void;
-};
+// ----------------------------------------------------------------------
 
 export function UserTableHead({
   order,

@@ -13,23 +13,9 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
+import type { UserTableRowProps } from './user-table.types';
+
 // ----------------------------------------------------------------------
-
-export type UserProps = {
-  id: string;
-  name: string;
-  role: string;
-  status: string;
-  company: string;
-  avatarUrl: string;
-  isVerified: boolean;
-};
-
-type UserTableRowProps = {
-  row: UserProps;
-  selected: boolean;
-  onSelectRow: () => void;
-};
 
 export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);

@@ -25,7 +25,7 @@ import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../user-table-toolbar';
 
-import type { UserProps } from '../user-table-row';
+import type { UserProps } from '../user-table.types';
 
 // ----------------------------------------------------------------------
 
@@ -46,14 +46,14 @@ export function UserView() {
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Users
+          لیست کاربران
         </Typography>
         <Button
           variant="contained"
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
         >
-          New user
+          اضافه کردن کاربر
         </Button>
       </Box>
 

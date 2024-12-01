@@ -7,19 +7,15 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { Iconify } from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
+import type { UserTableToolbarProps } from './user-table.types';
 
-type UserTableToolbarProps = {
-  numSelected: number;
-  filterName: string;
-  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+// ----------------------------------------------------------------------
 
 export function UserTableToolbar({ numSelected, filterName, onFilterName }: UserTableToolbarProps) {
   return (
     <Toolbar
       sx={{
-        height: 96,
+        height: 80,
         display: 'flex',
         justifyContent: 'space-between',
         p: (theme) => theme.spacing(0, 1, 0, 3),
@@ -31,14 +27,15 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName }: User
     >
       {numSelected > 0 ? (
         <Typography component="div" variant="subtitle1">
-          {numSelected} selected
+          {numSelected} انتخاب شده
         </Typography>
       ) : (
         <OutlinedInput
           fullWidth
+          size="small"
           value={filterName}
           onChange={onFilterName}
-          placeholder="Search user..."
+          placeholder="جستجو کاربر"
           startAdornment={
             <InputAdornment position="start">
               <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
@@ -49,13 +46,13 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName }: User
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="حذف">
           <IconButton>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
+        <Tooltip title="فیلتر">
           <IconButton>
             <Iconify icon="ic:round-filter-list" />
           </IconButton>
