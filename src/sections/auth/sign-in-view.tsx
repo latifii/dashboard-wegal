@@ -16,6 +16,8 @@ import { useDispatch } from 'react-redux';
 // import { setNotification } from 'src/store/slices/notificationSlice';
 import { setNotification } from 'src/store/slices/notificationSlice';
 
+import Modal from 'src/components/modal/modal';
+
 import { useVerify } from './useVerify';
 
 import type { SiginInForm } from './sign-in.types';
@@ -27,14 +29,15 @@ export function SignInView() {
   const { mutate: verifyMutate, isPending } = useVerify();
   const sendPostRequest = async () => {
     try {
-      const response = await fetch('https://warranty.wegal.ir/Account/verify', {
+      const response = await fetch('https://warranty.mattresswegal.ir/Account/verify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          mobile: '09123456789', // داده‌های مورد نیاز درخواست شما
+          mobileNumber: '09377512323', // داده‌های مورد نیاز درخواست شما
         }),
+        // mode: 'no-cors',
       });
 
       if (!response.ok) {
@@ -112,6 +115,25 @@ export function SignInView() {
           onInput={handleInputChange}
         />
 
+        <Modal>
+          <Modal.Open opens="exa">
+            <Button>اضافه</Button>
+          </Modal.Open>
+
+          <Modal.Window title="مودال اول" name="exa">
+            <div>This is </div>
+          </Modal.Window>
+        </Modal>
+
+        <Modal>
+          <Modal.Open opens="dell">
+            <Button>حذف</Button>
+          </Modal.Open>
+
+          <Modal.Window title="مودال دوم" name="dell">
+            <div>حذفش کن </div>
+          </Modal.Window>
+        </Modal>
         <Button
           fullWidth
           size="large"
