@@ -1,12 +1,18 @@
-import type { Login, VerifyLogin } from 'src/types/auth.interface';
+import type { Signin, Verify } from 'src/types/auth.interface';
 
 import http from 'src/configs/axios';
 
-export async function verifyApi(data: VerifyLogin): Promise<any> {
+export async function verifyApi(data: Signin): Promise<any> {
   const response = await http.post('/Account/verify', data);
   return response.data;
 }
 
-export function loginApi(data: Login) {
-  return http.post('/Account/signin', data).then((response) => response.data);
+export async function signinApi(data: Verify): Promise<any> {
+  try {
+    const response = await http.post('/Account/signin', data);
+    return response.data;
+  } catch (error) {
+    console.error('Error during login API call:', error);
+    throw error;
+  }
 }

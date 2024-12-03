@@ -1,8 +1,8 @@
-export interface VerifyLogin {
+export interface Signin {
   mobileNumber: string;
 }
 
-export interface Login {
+export interface Verify {
   mobileNumber: string;
   verifyCode: string;
 }
