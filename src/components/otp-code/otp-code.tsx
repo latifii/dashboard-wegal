@@ -130,7 +130,7 @@ const OtpCode = forwardRef<AuthCodeRef, AuthCodeProps>(
           }}
           variant="outlined"
           size="small"
-          sx={{ width: '4rem' }}
+          sx={{ width: '3rem' }}
         />
       );
     }
