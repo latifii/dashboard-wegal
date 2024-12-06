@@ -39,6 +39,7 @@ export function SignInView() {
 
   const handleSignIn: SubmitHandler<SiginInForm> = (data) => {
     verifyMutate({ mobileNumber: data.mobile });
+    // console.log(typeof data.mobile, data.mobile);
   };
 
   return (

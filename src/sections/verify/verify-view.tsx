@@ -28,7 +28,7 @@ export const VerifyView: React.FC = () => {
     console.log(verifyCode, mobileNumber);
     if (verifyCode && mobileNumber) {
       loginMuate({ mobileNumber, verifyCode });
-      console.log('ok', verifyCode, mobileNumber);
+      // console.log('ok', verifyCode, mobileNumber);
     }
   };
   return (
@@ -40,7 +40,6 @@ export const VerifyView: React.FC = () => {
         ref={authRef}
         length={lengthOtp}
         onChange={(value) => {
-          console.log(value);
           setVerifyCode(value);
         }}
       />

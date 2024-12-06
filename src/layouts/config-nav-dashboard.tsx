@@ -54,9 +54,4 @@ export const navData = [
     path: '/warranty-display',
     icon: icon('ic-cart'),
   },
-  {
-    title: 'Blog',
-    path: '/blog',
-    icon: icon('ic-blog'),
-  },
 ];

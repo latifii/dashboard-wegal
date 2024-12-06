@@ -1,32 +1,37 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
-import { _tasks, _posts, _timeline } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
+// import { getProfileApi } from 'src/services/authService';
 
-import { AnalyticsNews } from '../analytics-news';
-import { AnalyticsTasks } from '../analytics-tasks';
-import { AnalyticsCurrentVisits } from '../analytics-current-visits';
-import { AnalyticsOrderTimeline } from '../analytics-order-timeline';
-import { AnalyticsWebsiteVisits } from '../analytics-website-visits';
+// import { getProfileApi } from 'src/services/authService';
+
+import { useProfile } from '../useProfile';
 import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
-import { AnalyticsTrafficBySite } from '../analytics-traffic-by-site';
-import { AnalyticsCurrentSubject } from '../analytics-current-subject';
-import { AnalyticsConversionRates } from '../analytics-conversion-rates';
 
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
+  const { getProfile, isLoading } = useProfile();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!getProfile) {
+    return <div>Unable to load profile</div>;
+  }
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Hi, Welcome back 👋
+        خوش آمدی 👋
+        {getProfile.data.phoneNumber}
       </Typography>
-
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Weekly sales"
+            title="فروش هفتگی"
             percent={2.6}
             total={714000}
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
@@ -39,9 +44,9 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="New users"
+            title="تعداد کاربران"
             percent={-0.1}
-            total={1352831}
+            total={140}
             color="secondary"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-users.svg" />}
             chart={{
@@ -53,9 +58,9 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Purchase orders"
+            title="گارانتی"
             percent={2.8}
-            total={1723315}
+            total={120}
             color="warning"
             icon={<img alt="icon" src="/assets/icons/glass/ic-glass-buy.svg" />}
             chart={{
@@ -67,7 +72,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AnalyticsWidgetSummary
-            title="Messages"
+            title="فاکتور"
             percent={3.6}
             total={234}
             color="error"
@@ -79,7 +84,7 @@ export function OverviewAnalyticsView() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
+        {/* <Grid xs={12} md={6} lg={4}>
           <AnalyticsCurrentVisits
             title="Current visits"
             chart={{
@@ -91,9 +96,9 @@ export function OverviewAnalyticsView() {
               ],
             }}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid xs={12} md={6} lg={8}>
+        {/* <Grid xs={12} md={6} lg={8}>
           <AnalyticsWebsiteVisits
             title="Website visits"
             subheader="(+43%) than last year"
@@ -105,9 +110,9 @@ export function OverviewAnalyticsView() {
               ],
             }}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid xs={12} md={6} lg={8}>
+        {/* <Grid xs={12} md={6} lg={8}>
           <AnalyticsConversionRates
             title="Conversion rates"
             subheader="(+43%) than last year"
@@ -157,7 +162,7 @@ export function OverviewAnalyticsView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AnalyticsTasks title="Tasks" list={_tasks} />
-        </Grid>
+        </Grid> */}
       </Grid>
     </DashboardContent>
   );

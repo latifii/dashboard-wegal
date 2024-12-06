@@ -20,6 +20,19 @@ const app: AxiosInstance = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+app.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 app.interceptors.response.use(
   (response) => {
     return response;
@@ -35,7 +48,7 @@ app.interceptors.response.use(
 const http: HttpClient = {
   get: app.get,
   post: app.post,
-  delete: app.post,
+  delete: app.delete,
   put: app.put,
   patch: app.patch,
 };
