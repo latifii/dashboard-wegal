@@ -1,13 +1,15 @@
 import { Navigate } from 'react-router-dom';
 
+import { getAccessToken } from 'src/utils/local-storage';
+
 interface ProtectedRouteProps {
   children: JSX.Element;
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const isAuthenticated = Boolean(localStorage.getItem('authToken'));
+  const isGetAccessToken = Boolean(getAccessToken());
 
-  if (!isAuthenticated) {
+  if (!isGetAccessToken) {
     return <Navigate to="/signin" replace />;
   }
 

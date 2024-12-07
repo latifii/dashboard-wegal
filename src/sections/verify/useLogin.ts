@@ -12,15 +12,20 @@ import { setNotification } from 'src/store/slices/notificationSlice';
 export function useLogin(): UseMutationResult<any, AxiosError, Verify> {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const mutation = useMutation<any, AxiosError, Verify>({
     mutationFn: (data: Verify) => signinApi(data),
+
     onSuccess: (data) => {
       dispatch(setNotification({ message: 'ورود با موفقیت انجام شد', status: 'success' }));
+
       if (data.statusCode === 200) {
+        console.log('Redirecting to dashboard...');
         navigate('/');
         console.log('success');
       }
     },
+
     onError: (error: AxiosError) => {
       if (error?.status === 400) {
         dispatch(setNotification({ message: 'کد تایید صحیح نمی‌باشد', status: 'error' }));

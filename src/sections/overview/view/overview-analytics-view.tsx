@@ -6,7 +6,14 @@ import { DashboardContent } from 'src/layouts/dashboard';
 
 // import { getProfileApi } from 'src/services/authService';
 
+import { Button } from '@mui/material';
+
 import { fNumberNoComma } from 'src/utils/format-number';
+import { getRefreshToken } from 'src/utils/local-storage';
+
+import { refreshTokenApi } from 'src/services/authService';
+
+import { LinearLoading } from 'src/components/loading';
 
 import { useProfile } from '../useProfile';
 import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
@@ -16,19 +23,54 @@ import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
 export function OverviewAnalyticsView() {
   const { getProfile, isLoading } = useProfile();
 
+  // فرض کنید شما یک دکمه یا مکانیزم برای تست دارید
+  const testRefreshToken = async () => {
+    // پاک کردن access token
+    localStorage.removeItem('access');
+
+    // دسترسی به refresh token
+    const refreshToken = getRefreshToken(); // از localStorage یا از هر روش دیگری که ذخیره کرده‌اید
+
+    if (refreshToken) {
+      try {
+        // درخواست برای دریافت access token جدید
+        const response = await refreshTokenApi(refreshToken);
+        const newAccessToken = response.accessToken;
+        const newRefreshToken = response.refreshToken; // فرض بر این است که refresh token جدید نیز دریافت می‌کنید
+
+        // ذخیره توکن جدید در localStorage
+        if (newAccessToken) {
+          localStorage.setItem('access', newAccessToken);
+          console.log('New Access Token:', newAccessToken);
+        }
+
+        // ذخیره refresh token جدید در localStorage
+        if (newRefreshToken) {
+          localStorage.setItem('refresh', newRefreshToken);
+          console.log('New Refresh Token:', newRefreshToken);
+        }
+      } catch (error) {
+        console.error('Error refreshing token:', error);
+      }
+    }
+  };
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LinearLoading />;
   }
 
   if (!getProfile) {
     return <div>Unable to load profile</div>;
   }
 
+  console.log(getProfile.data);
+
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
         خوش آمدی 👋
         {fNumberNoComma(getProfile.data.phoneNumber)}
+        <Button onClick={testRefreshToken}>حذف</Button>
       </Typography>
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
