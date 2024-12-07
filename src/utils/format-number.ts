@@ -7,7 +7,7 @@ export type InputNumberValue = string | number | null | undefined;
 
 type Options = Intl.NumberFormatOptions | undefined;
 
-const DEFAULT_LOCALE = { code: 'en-US', currency: 'USD' };
+const DEFAULT_LOCALE = { code: 'fa-IR', currency: 'IRR' };
 
 function processInput(inputValue: InputNumberValue): number | null {
   if (inputValue == null || Number.isNaN(inputValue)) return null;
@@ -29,6 +29,15 @@ export function fNumber(inputValue: InputNumberValue, options?: Options) {
   }).format(number);
 
   return fm;
+}
+
+export function fNumberNoComma(inputValue: InputNumberValue): string | null {
+  const locale = DEFAULT_LOCALE;
+
+  const number = processInput(inputValue);
+  if (number === null) return null;
+
+  return new Intl.NumberFormat(locale.code, { useGrouping: false }).format(number);
 }
 
 // ----------------------------------------------------------------------

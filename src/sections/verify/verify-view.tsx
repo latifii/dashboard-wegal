@@ -1,11 +1,14 @@
 import type { AuthCodeRef } from 'src/components/otp-code/otp-code.types';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Box, Button, Typography } from '@mui/material';
 
+import { fNumberNoComma } from 'src/utils/format-number';
+
 import OtpCode from 'src/components/otp-code/otp-code';
+import { LinearLoading } from 'src/components/loading';
 
 import { useLogin } from './useLogin';
 
@@ -23,18 +26,29 @@ export const VerifyView: React.FC = () => {
 
   const { mutate: loginMuate, status, isPending } = useLogin();
 
-  // const token = Cookies.get();
   const handleVerify = () => {
     console.log(verifyCode, mobileNumber);
     if (verifyCode && mobileNumber) {
       loginMuate({ mobileNumber, verifyCode });
-      // console.log('ok', verifyCode, mobileNumber);
     }
   };
+
+  useEffect(() => {
+    if (!mobileNumber) {
+      navigate('/signin');
+    }
+  }, [mobileNumber, navigate]);
+
+  if (!mobileNumber) {
+    return <LinearLoading />;
+  }
+
   return (
     <Box gap={2} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
       <Typography variant="h5">کد تایید</Typography>
-      <Typography variant="body2">جهت ورود کد تایید شماره {mobileNumber} وارد کنید </Typography>
+      <Typography variant="body2">
+        کد تایید شماره {fNumberNoComma(mobileNumber)} وارد کنید
+      </Typography>
 
       <OtpCode
         ref={authRef}
@@ -53,7 +67,7 @@ export const VerifyView: React.FC = () => {
         onClick={handleVerify}
         disabled={verifyCode.length !== lengthOtp || isPending}
       >
-        تایید و ادامه
+        {!isPending ? 'تایید و ادامه' : 'در حال ارسال...'}
       </Button>
     </Box>
   );

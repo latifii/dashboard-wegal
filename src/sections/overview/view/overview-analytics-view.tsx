@@ -6,6 +6,8 @@ import { DashboardContent } from 'src/layouts/dashboard';
 
 // import { getProfileApi } from 'src/services/authService';
 
+import { fNumberNoComma } from 'src/utils/format-number';
+
 import { useProfile } from '../useProfile';
 import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
 
@@ -26,7 +28,7 @@ export function OverviewAnalyticsView() {
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
         خوش آمدی 👋
-        {getProfile.data.phoneNumber}
+        {fNumberNoComma(getProfile.data.phoneNumber)}
       </Typography>
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>
