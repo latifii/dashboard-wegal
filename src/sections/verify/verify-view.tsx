@@ -12,8 +12,6 @@ import { LinearLoading } from 'src/components/loading';
 
 import { useLogin } from './useLogin';
 
-// import Cookies from 'js-cookie';
-
 export const VerifyView: React.FC = () => {
   const lengthOtp = 6;
 
@@ -24,7 +22,7 @@ export const VerifyView: React.FC = () => {
   const queryParams = new URLSearchParams(location.search) || '';
   const mobileNumber = queryParams.get('mobile');
 
-  const { mutate: loginMuate, status, isPending } = useLogin();
+  const { mutate: loginMuate, isPending } = useLogin();
 
   const handleVerify = () => {
     console.log(verifyCode, mobileNumber);

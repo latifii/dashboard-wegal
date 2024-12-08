@@ -20,9 +20,7 @@ export function useLogin(): UseMutationResult<any, AxiosError, Verify> {
       dispatch(setNotification({ message: 'ورود با موفقیت انجام شد', status: 'success' }));
 
       if (data.statusCode === 200) {
-        console.log('Redirecting to dashboard...');
         navigate('/');
-        console.log('success');
       }
     },
 

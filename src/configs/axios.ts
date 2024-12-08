@@ -25,26 +25,16 @@ async function refreshAccessToken() {
 
   try {
     const response = await axios.post(
-      `${API_BASE_URL}/Account/refresh?refreshToken=${refreshToken}`,
-      {},
-      {
-        headers: {
-          accept: 'text/plain',
-        },
-      }
+      `${API_BASE_URL}/Account/refresh?refreshToken=${refreshToken}`
     );
 
-    const { accessToken, refreshToken: newRefreshToken } = response.data;
-    console.log('response.data', response.data);
-    console.log('response.data accessToken', response.data.accessToken);
+    const { accessToken, refreshToken: newRefreshToken } = response.data.data;
 
     if (accessToken) {
-      // ذخیره توکن جدید در localStorage
       localStorage.setItem('access', accessToken);
     }
 
     if (newRefreshToken) {
-      // ذخیره refreshToken جدید در localStorage
       localStorage.setItem('refresh', newRefreshToken);
     }
     return accessToken;
@@ -52,7 +42,7 @@ async function refreshAccessToken() {
     console.error('Refresh token failed:', error);
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
-    window.location.href = '/signin'; // هدایت به صفحه ورود در صورت خطا
+    window.location.href = '/signin';
     throw new Error('Unable to refresh access token');
   }
 }
@@ -61,7 +51,6 @@ app.interceptors.request.use(
   (config) => {
     const accessToken = getAccessToken();
     if (accessToken) {
-      console.log('Adding token to request:', accessToken);
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
@@ -72,27 +61,23 @@ app.interceptors.request.use(
 );
 
 app.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
     console.log('Original request:', originalRequest);
 
-    // If error is 401 (Unauthorized) and token has expired, attempt to refresh token
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401) {
       originalRequest._retry = true;
 
       try {
         const newAccessToken = await refreshAccessToken();
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        // Retry the original request with the new access token
         console.log('Retrying original request...');
         return await axios(originalRequest);
       } catch (refreshError) {
-        // If refresh token is invalid or any error occurs, redirect to login
         console.error('Refresh failed:', refreshError);
+        window.location.href = '/signin';
         return Promise.reject(refreshError);
       }
     }

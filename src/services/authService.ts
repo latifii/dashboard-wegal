@@ -15,7 +15,6 @@ export async function verifyApi(data: Signin): Promise<any> {
 export async function signinApi(data: Verify): Promise<any> {
   try {
     const response = await http.post('/Account/signin', data);
-    console.log('Login response:', response);
     const { accessToken, refreshToken } = response.data.data;
 
     if (accessToken) {
@@ -35,15 +34,7 @@ export async function signinApi(data: Verify): Promise<any> {
 
 export async function refreshTokenApi(refreshToken: string): Promise<any> {
   try {
-    const response = await http.post(
-      `/Account/refresh?refreshToken=${refreshToken}`,
-      {},
-      {
-        headers: {
-          accept: 'text/plain',
-        },
-      }
-    );
+    const response = await http.post(`/Account/refresh?refreshToken=${refreshToken}`);
     return response.data;
   } catch (error) {
     console.error('Error during refresh token API call:', error);
