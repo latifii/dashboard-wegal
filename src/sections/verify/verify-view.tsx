@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Box, Button, Typography } from '@mui/material';
 
-import { fNumberNoComma } from 'src/utils/format-number';
+import { fNumberNormal } from 'src/utils/format-number';
 
 import OtpCode from 'src/components/otp-code/otp-code';
 import { LinearLoading } from 'src/components/loading';
@@ -25,7 +25,6 @@ export const VerifyView: React.FC = () => {
   const { mutate: loginMuate, isPending } = useLogin();
 
   const handleVerify = () => {
-    console.log(verifyCode, mobileNumber);
     if (verifyCode && mobileNumber) {
       loginMuate({ mobileNumber, verifyCode });
     }
@@ -45,7 +44,7 @@ export const VerifyView: React.FC = () => {
     <Box gap={2} display="flex" flexDirection="column" alignItems="center" sx={{ mb: 5 }}>
       <Typography variant="h5">کد تایید</Typography>
       <Typography variant="body2">
-        کد تایید شماره {fNumberNoComma(mobileNumber)} وارد کنید
+        کد تایید شماره {fNumberNormal(mobileNumber)} وارد کنید
       </Typography>
 
       <OtpCode

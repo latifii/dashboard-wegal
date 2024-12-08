@@ -31,7 +31,7 @@ export function fNumber(inputValue: InputNumberValue, options?: Options) {
   return fm;
 }
 
-export function fNumberNoComma(inputValue: InputNumberValue): string | null {
+export function fNumberNormal(inputValue: InputNumberValue): string | null {
   const locale = DEFAULT_LOCALE;
 
   const number = processInput(inputValue);

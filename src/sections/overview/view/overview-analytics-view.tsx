@@ -1,35 +1,37 @@
+import type { RootState } from 'src/store/store';
+
+import { useSelector } from 'react-redux';
+
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
-import { fNumberNoComma } from 'src/utils/format-number';
+import { fNumberNormal } from 'src/utils/format-number';
 
 import { DashboardContent } from 'src/layouts/dashboard';
 
-import { LinearLoading } from 'src/components/loading';
-
-import { useProfile } from '../useProfile';
 import { AnalyticsWidgetSummary } from '../analytics-widget-summary';
 
 // ----------------------------------------------------------------------
 
 export function OverviewAnalyticsView() {
-  const { getProfile, isLoading } = useProfile();
+  // const { getProfile, isLoading } = useProfile();
 
-  if (isLoading) {
-    return <LinearLoading />;
-  }
+  // if (isLoading) {
+  //   return <LinearLoading />;
+  // }
 
-  if (!getProfile) {
-    return <div>Unable to load profile</div>;
-  }
+  // if (!getProfile) {
+  //   return <div>Unable to load profile</div>;
+  // }
 
   // console.log(getProfile.data);
 
+  const { phoneNumber } = useSelector((state: RootState) => state.user);
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
         خوش آمدی 👋
-        {fNumberNoComma(getProfile.data.phoneNumber)}
+        {fNumberNormal(phoneNumber)}
       </Typography>
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3}>

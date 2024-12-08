@@ -79,12 +79,12 @@ export function DashboardLayout({ sx, children, header }: DashboardLayoutProps) 
                     },
                     {
                       label: 'پروفایل',
-                      href: '#',
+                      href: '/profile',
                       icon: <Iconify width={22} icon="solar:shield-keyhole-bold-duotone" />,
                     },
                     {
-                      label: 'تنظیمات',
-                      href: '#',
+                      label: 'ویرایش',
+                      href: '/profile',
                       icon: <Iconify width={22} icon="solar:settings-bold-duotone" />,
                     },
                   ]}

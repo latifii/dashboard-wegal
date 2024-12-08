@@ -6,8 +6,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { UserState } from './slices.types';
 
 const initialState: UserState = {
-  id: null,
-  name: null,
+  phoneNumber: null,
+  userName: null,
+  firstName: null,
+  lastName: null,
 };
 
 const userSlice = createSlice({
@@ -15,12 +17,16 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
-      state.id = action.payload.id;
-      state.name = action.payload.name;
+      state.phoneNumber = action.payload.phoneNumber;
+      state.userName = action.payload.userName;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
     },
     clearUser: (state) => {
-      state.id = null;
-      state.name = null;
+      // state.phoneNumber = null;
+      state.userName = null;
+      state.firstName = null;
+      state.lastName = null;
     },
   },
 });

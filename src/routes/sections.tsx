@@ -22,6 +22,7 @@ export const OutInventoryPage = lazy(() => import('src/pages/out-Inventory'));
 export const InvoicePage = lazy(() => import('src/pages/invoice'));
 export const WarrantyRegisterPage = lazy(() => import('src/pages/warranty-register'));
 export const WarrantyDisplayPage = lazy(() => import('src/pages/warranty-display'));
+export const ProfileyPage = lazy(() => import('src/pages/profile'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 // ----------------------------------------------------------------------
@@ -49,6 +50,7 @@ export function Router() {
         { path: 'invoice', element: <InvoicePage /> },
         { path: 'warranty-register', element: <WarrantyRegisterPage /> },
         { path: 'warranty-display', element: <WarrantyDisplayPage /> },
+        { path: 'profile', element: <ProfileyPage /> },
       ],
     },
     {

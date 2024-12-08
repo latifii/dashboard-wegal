@@ -16,7 +16,6 @@ export function useVerify(): UseMutationResult<any, Error, Signin> {
     mutationFn: (data: Signin) => verifyApi(data),
     onSuccess: (data, variables) => {
       dispatch(setNotification({ message: 'کد تایید با موفقیت ارسال شد', status: 'success' }));
-      console.log('verify', data);
       navigate(`/verify?mobile=${variables.mobileNumber}`);
     },
     onError: (error: Error) => {
