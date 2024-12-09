@@ -19,7 +19,7 @@ const Notifications: React.FC = () => {
         position: 'fixed',
         flexDirection: 'column', // تغییر به column
         bottom: '1rem',
-        left: '1rem',
+        right: '3rem',
         gap: '0.75rem',
         zIndex: 1000,
         maxWidth: '300px', // حداکثر عرض

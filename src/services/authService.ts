@@ -1,6 +1,7 @@
 import type { Signin, Verify } from 'src/types/auth.interface';
 
 import http from 'src/configs/axios';
+import { UpdateProfile } from 'src/types/user.interface';
 
 export async function verifyApi(data: Signin): Promise<any> {
   try {
@@ -50,5 +51,21 @@ export async function getProfileApi(): Promise<any> {
   } catch (error) {
     console.error('Error during profile API call:', error);
     throw new Error('Profile request failed');
+  }
+}
+
+export async function updateProfileApi(data: UpdateProfile): Promise<any> {
+  try {
+    const response = await http.put('/Account/update-profile', data);
+    return response.data;
+  } catch (error) {
+    console.error('Error during update profile API call:', error.status);
+    if (error.status === 400) {
+      throw new Error('اطلاعات وارد شده صحیح نیست');
+    } else if (error.status === 409) {
+      throw new Error('نام کاربری قبلا وارد شده است');
+    } else {
+      throw new Error('خطای ناشناخته دوباره تلاش کنید');
+    }
   }
 }

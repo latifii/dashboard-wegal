@@ -1,7 +1,7 @@
 import type { Notification } from '../../types/notification.type';
 
 export type UserState = {
-  phoneNumber: string | null;
+  phoneNumber?: string | null;
   userName?: string | null;
   firstName?: string | null;
   lastName?: string | null;

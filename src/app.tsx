@@ -3,6 +3,7 @@ import 'src/global.css';
 import { Provider } from 'react-redux';
 import { CacheProvider } from '@emotion/react';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { PersistGate } from 'redux-persist/integration/react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Fab from '@mui/material/Fab';
@@ -15,8 +16,8 @@ import { ThemeProvider } from 'src/theme/theme-provider';
 
 import { Iconify } from 'src/components/iconify';
 
-import store from './store/store';
 import { cacheRtl } from './theme/create-cache';
+import { store, persistor } from './store/store';
 import { queryClient } from './configs/react-query';
 import Notifications from './components/error-notification/notifications';
 
@@ -48,14 +49,16 @@ export default function App() {
   return (
     <CacheProvider value={cacheRtl}>
       <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ThemeProvider>
-            <Notifications />
-            <Router />
-            {githubButton}
-          </ThemeProvider>
-        </QueryClientProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <ThemeProvider>
+              <Notifications />
+              <Router />
+              {githubButton}
+            </ThemeProvider>
+          </QueryClientProvider>
+        </PersistGate>
       </Provider>
     </CacheProvider>
   );
