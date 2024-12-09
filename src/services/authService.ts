@@ -1,7 +1,7 @@
+import type { UpdateProfile } from 'src/types/user.interface';
 import type { Signin, Verify } from 'src/types/auth.interface';
 
 import http from 'src/configs/axios';
-import { UpdateProfile } from 'src/types/user.interface';
 
 export async function verifyApi(data: Signin): Promise<any> {
   try {
@@ -67,5 +67,15 @@ export async function updateProfileApi(data: UpdateProfile): Promise<any> {
     } else {
       throw new Error('خطای ناشناخته دوباره تلاش کنید');
     }
+  }
+}
+
+export async function signOutApi(refreshToken: string): Promise<any> {
+  try {
+    const response = await http.post(`/Account/signout?refreshToken=${refreshToken}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error during sign-out API call:', error);
+    throw new Error('Sign-out request failed');
   }
 }

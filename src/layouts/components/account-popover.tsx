@@ -16,8 +16,12 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { useRouter, usePathname } from 'src/routes/hooks';
 
-import { _myAccount } from 'src/_mock';
 import { fNumberNormal } from 'src/utils/format-number';
+import { getRefreshToken } from 'src/utils/local-storage';
+
+import { _myAccount } from 'src/_mock';
+
+import { useLogout } from 'src/sections/auth/useLogout';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +41,8 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
 
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
+  const refreshToken = getRefreshToken();
+  const { mutate: mutateLogout, isPending } = useLogout();
   const { phoneNumber, userName, firstName, lastName } = useSelector(
     (state: RootState) => state.user
   );
@@ -57,6 +63,15 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
     [handleClosePopover, router]
   );
 
+  const handleSignout = () => {
+    if (refreshToken) {
+      console.log(refreshToken);
+      mutateLogout(refreshToken);
+    } else {
+      console.error('No Refresh token found');
+      console.log(refreshToken);
+    }
+  };
   return (
     <>
       <IconButton
@@ -136,7 +151,14 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Box sx={{ p: 1 }}>
-          <Button fullWidth color="error" size="medium" variant="text">
+          <Button
+            fullWidth
+            color="error"
+            size="medium"
+            variant="text"
+            onClick={handleSignout}
+            disabled={isPending}
+          >
             خروج
           </Button>
         </Box>

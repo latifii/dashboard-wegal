@@ -23,7 +23,7 @@ const userSlice = createSlice({
       state.lastName = action.payload.lastName;
     },
     clearUser: (state) => {
-      // state.phoneNumber = null;
+      state.phoneNumber = null;
       state.userName = null;
       state.firstName = null;
       state.lastName = null;
