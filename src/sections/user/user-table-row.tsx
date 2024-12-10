@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,9 +9,11 @@ import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
-import { Label } from 'src/components/label';
+import { variableRoles } from 'src/utils/variables';
+
 import { Iconify } from 'src/components/iconify';
-import { UserTableRowInfoProps } from './user.types';
+
+import type { UserTableRowInfoProps } from './user.types';
 
 // import type { UserTableRowProps } from './user-table.types';
 
@@ -20,6 +21,7 @@ import { UserTableRowInfoProps } from './user.types';
 
 export function UserTableRow({ row, selected, onSelectRow }: UserTableRowInfoProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
+  const { phoneNumber, firstName, lastName, userName, userType } = row;
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenPopover(event.currentTarget);
@@ -38,26 +40,14 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowInfoPro
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            {/* <Avatar alt={row.name} src={row.avatarUrl} /> */}
-            {`${row.firstName} ${row.firstName}`}
+            {firstName || lastName ? `${firstName} ${firstName}` : 'ایجاد نشده'}
           </Box>
         </TableCell>
 
-        <TableCell>{row.phoneNumber}</TableCell>
+        <TableCell>{phoneNumber}</TableCell>
 
-        <TableCell>{row.phoneNumber}</TableCell>
-
-        <TableCell align="center">
-          {true ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
-          ) : (
-            '-'
-          )}
-        </TableCell>
-
-        <TableCell>
-          <Label color="success">{row.userName}</Label>
-        </TableCell>
+        <TableCell>{userName || 'نام کاربری ایجاد نشده'}</TableCell>
+        <TableCell>{userType ? variableRoles[userType] : 'کاربر عادی'}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenPopover}>
@@ -91,12 +81,12 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowInfoPro
         >
           <MenuItem onClick={handleClosePopover}>
             <Iconify icon="solar:pen-bold" />
-            Edit
+            ویرایش
           </MenuItem>
 
           <MenuItem onClick={handleClosePopover} sx={{ color: 'error.main' }}>
             <Iconify icon="solar:trash-bin-trash-bold" />
-            Delete
+            حذف
           </MenuItem>
         </MenuList>
       </Popover>

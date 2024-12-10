@@ -15,12 +15,14 @@ export interface RoleUser {
   code: number;
 }
 
+export type UserType = 'VegalAdmin' | 'Vendor';
+
 export interface UserInfo {
   id: string;
   phoneNumber: string;
   firstName?: string;
   lastName?: string;
   userName?: string;
-  userType?: string;
+  userType?: UserType;
   role: RoleUser[];
 }

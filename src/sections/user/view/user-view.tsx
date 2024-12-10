@@ -17,7 +17,6 @@ import { useTable } from 'src/hooks/use-table';
 
 import { emptyRows, applyFilter, getComparator } from 'src/utils/utils';
 
-import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
@@ -31,7 +30,7 @@ import { UserTableHead } from '../user-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../user-table-toolbar';
 
-import type { UserProps } from '../user-table.types';
+import type { UserInfoProps } from '../user.types';
 
 // ----------------------------------------------------------------------
 
@@ -43,14 +42,9 @@ export function UserView() {
   });
   const [filterName, setFilterName] = useState('');
 
-  const dataFiltered: UserProps[] = applyFilter({
-    inputData: _users,
-    comparator: getComparator(table.order, table.orderBy),
-    filterName,
-  });
-
-  const notFound = !dataFiltered.length && !!filterName;
-  if (isLoading) <LinearLoading />;
+  if (isLoading) {
+    return <LinearLoading />;
+  }
 
   if (isError) {
     return (
@@ -62,6 +56,13 @@ export function UserView() {
   const dataUsers = data?.data;
   console.log('data get users:', dataUsers);
 
+  const dataFiltered: UserInfoProps[] = applyFilter({
+    inputData: dataUsers,
+    comparator: getComparator(table.order, table.orderBy),
+    filterName,
+  });
+
+  const notFound = !dataFiltered?.length && !!filterName;
   return (
     <DashboardContent>
       <Box display="flex" alignItems="center" mb={5}>
@@ -93,51 +94,41 @@ export function UserView() {
               <UserTableHead
                 order={table.order}
                 orderBy={table.orderBy}
-                rowCount={_users.length}
+                rowCount={dataUsers?.length}
                 numSelected={table.selected.length}
                 onSort={table.onSort}
                 onSelectAllRows={(checked) =>
                   table.onSelectAllRows(
                     checked,
-                    _users.map((user) => user.id)
+                    dataUsers?.map((user: { id: string }) => user.id)
                   )
                 }
                 headLabel={[
                   { id: 'fullName', label: 'نام  و نام خانوداگی' },
                   { id: 'phone', label: 'شماره تلفن' },
-                  { id: 'role', label: 'نقش' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
                   { id: 'userName', label: 'نام کاربری' },
+                  { id: 'role', label: 'نقش' },
                   { id: '' },
                 ]}
               />
               <TableBody>
-                {/* {dataFiltered
-                  .slice(
+                {dataFiltered
+                  ?.slice(
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
-                  .map((row) => (
+                  ?.map((dataUser: UserInfo) => (
                     <UserTableRow
-                      key={row.id}
-                      row={row}
-                      selected={table.selected.includes(row.id)}
-                      onSelectRow={() => table.onSelectRow(row.id)}
+                      key={dataUser.id}
+                      row={dataUser}
+                      selected={table.selected.includes(dataUser.id)}
+                      onSelectRow={() => table.onSelectRow(dataUser.id)}
                     />
-                  ))} */}
-
-                {dataUsers?.map((dataUser: UserInfo) => (
-                  <UserTableRow
-                    key={dataUser.id}
-                    row={dataUser}
-                    selected={table.selected.includes(dataUser.id)}
-                    onSelectRow={() => table.onSelectRow(dataUser.id)}
-                  />
-                ))}
+                  ))}
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, dataUsers?.length)}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -149,11 +140,13 @@ export function UserView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={dataFiltered?.length ?? 0}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}
           onRowsPerPageChange={table.onChangeRowsPerPage}
+          labelRowsPerPage="تعداد ردیف در هر صفحه"
+          labelDisplayedRows={({ from, to, count }) => `${from} تا ${to} از ${count}`}
         />
       </Card>
     </DashboardContent>
