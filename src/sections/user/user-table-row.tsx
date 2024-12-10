@@ -12,12 +12,13 @@ import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
+import { UserTableRowInfoProps } from './user.types';
 
-import type { UserTableRowProps } from './user-table.types';
+// import type { UserTableRowProps } from './user-table.types';
 
 // ----------------------------------------------------------------------
 
-export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function UserTableRow({ row, selected, onSelectRow }: UserTableRowInfoProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,17 +38,17 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            <Avatar alt={row.name} src={row.avatarUrl} />
-            {row.name}
+            {/* <Avatar alt={row.name} src={row.avatarUrl} /> */}
+            {`${row.firstName} ${row.firstName}`}
           </Box>
         </TableCell>
 
-        <TableCell>{row.company}</TableCell>
+        <TableCell>{row.phoneNumber}</TableCell>
 
-        <TableCell>{row.role}</TableCell>
+        <TableCell>{row.phoneNumber}</TableCell>
 
         <TableCell align="center">
-          {row.isVerified ? (
+          {true ? (
             <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
           ) : (
             '-'
@@ -55,7 +56,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
         </TableCell>
 
         <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
+          <Label color="success">{row.userName}</Label>
         </TableCell>
 
         <TableCell align="right">
