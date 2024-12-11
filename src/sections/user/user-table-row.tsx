@@ -40,7 +40,7 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowInfoPro
 
         <TableCell component="th" scope="row">
           <Box gap={2} display="flex" alignItems="center">
-            {firstName || lastName ? `${firstName} ${firstName}` : 'ایجاد نشده'}
+            {firstName || lastName ? `${firstName} ${lastName}` : 'ایجاد نشده'}
           </Box>
         </TableCell>
 

@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import { Alert } from '@mui/material';
+import { Alert, OutlinedInput } from '@mui/material';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import TableBody from '@mui/material/TableBody';
@@ -36,13 +36,14 @@ import type { UserInfoProps } from '../user.types';
 
 export function UserView() {
   const table = useTable();
-  const { data, isLoading, isError } = useGetUsers({
+  const { data, isLoading, isFetching, isError } = useGetUsers({
     pageNumber: 1,
     pageSize: 10,
   });
   const [filterName, setFilterName] = useState('');
+  const [searchUser, setSearchUser] = useState('');
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <LinearLoading />;
   }
 
@@ -53,7 +54,9 @@ export function UserView() {
       </Box>
     );
   }
-  const dataUsers = data?.data;
+  console.log('sss', data);
+
+  const dataUsers = data?.data?.resultList;
   console.log('data get users:', dataUsers);
 
   const dataFiltered: UserInfoProps[] = applyFilter({
@@ -80,14 +83,19 @@ export function UserView() {
 
       <Card>
         <UserTableToolbar
-          numSelected={table.selected.length}
           filterName={filterName}
           onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
             setFilterName(event.target.value);
             table.onResetPage();
           }}
         />
-
+        <OutlinedInput
+          value={searchUser}
+          onChange={(e) => {
+            setSearchUser(e.target.value);
+            console.log(searchUser);
+          }}
+        />
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>

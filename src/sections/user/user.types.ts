@@ -7,3 +7,8 @@ export type UserTableRowInfoProps = {
   selected: boolean;
   onSelectRow: () => void;
 };
+
+export type UserTableInfoToolbarProps = {
+  filterName: string;
+  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
